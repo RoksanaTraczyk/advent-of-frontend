@@ -4,8 +4,7 @@ export function findCyclesBetweenLocations(graph: Record<string, string[]>): str
     let startPlace = Object.keys(graph)[0];
     let cycle: string[] = [];
     if (graph[startPlace].length > 0) {
-        cycle.push(startPlace);
-        cycle = [...cycle, ...goInside(graph, startPlace)]
+        cycle = [startPlace, ...goInside(graph, startPlace, startPlace)]
     }
 
     let buffor: string[] = [];
@@ -21,21 +20,21 @@ export function findCyclesBetweenLocations(graph: Record<string, string[]>): str
     return result;
 }
 
-function goInside(graph: Record<string, string[]>, startPlace: string) {
+function goInside(graph: Record<string, string[]>, startPlace: string, globalStartPlace: string) {
     let cycle: string[] = [];
     graph[startPlace].forEach((place) => {
         if(!graph[place]){
             throw new Error('Invalid graph: missing nodes')
         }
-        if (graph[place].length !== 0 && place !== 'North Pole') {
+        if (graph[place].length !== 0 && place !== globalStartPlace) {
             cycle.push(place);
         }
-        if (place === 'North Pole') {
+        if (place === globalStartPlace) {
             cycle.push(place);
         } else {
-            if (goInside(graph, place).length > 0) {
-                cycle = [...cycle, ...goInside(graph, place)]
-            }
+            // if (insideResult.length > 0) {
+            cycle.push(...goInside(graph, place, globalStartPlace))
+            // }
         }
     })
 
