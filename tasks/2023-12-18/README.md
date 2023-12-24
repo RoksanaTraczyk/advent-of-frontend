@@ -1,0 +1,1 @@
+<img src="/resources/images/2023-12-18.png" alt="Alt text" title="Optional title">
