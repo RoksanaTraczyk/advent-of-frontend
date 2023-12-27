@@ -21,14 +21,14 @@ test('cancel interviews that exceed time constraints', async () => {
   expect(interview).toHaveBeenCalledTimes(3);
 });
 
-// test('cancel interview when someone brings up disallowed subject', async () => {
-//   const subjects = ['Team', 'Grinch', 'Calendar'];
-//   const interview: jest.Mock<Promise<string>, [string]> = jest.fn((message: string) =>
-//     message === 'Grinch'
-//       ? Promise.reject(new Error('Subject is not allowed'))
-//       : Promise.resolve(`Discussed: ${message}`)
-//   );
-//   const result = await conductInterviews(subjects, interview, 100);
-//   expect(result).toEqual(['Discussed: Team', 'Error: Subject is not allowed', 'Discussed: Calendar']);
-//   expect(interview).toHaveBeenCalledTimes(3);
-// });
+test('cancel interview when someone brings up disallowed subject', async () => {
+  const subjects = ['Team', 'Grinch', 'Calendar'];
+  const interview: jest.Mock<Promise<string>, [string]> = jest.fn((message: string) =>
+    message === 'Grinch'
+      ? Promise.reject(new Error('Subject is not allowed'))
+      : Promise.resolve(`Discussed: ${message}`)
+  );
+  const result = await conductInterviews(subjects, interview, 100);
+  expect(result).toEqual(['Discussed: Team', 'Error: Subject is not allowed', 'Discussed: Calendar']);
+  expect(interview).toHaveBeenCalledTimes(3);
+});
